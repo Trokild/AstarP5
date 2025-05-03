@@ -1,0 +1,18 @@
+{
+    "building": [
+        {
+            "Name": "House",
+            "Size": 1,
+            "Texture": "building1x1",
+            "Ground": "Grass",
+            "OpenSpace": 0
+        },
+        {
+            "Name": "Base",
+            "Size": 2,
+            "Texture": "building2x2",
+            "Ground": "Grass",
+            "OpenSpace": 0
+        }
+    ]
+}
