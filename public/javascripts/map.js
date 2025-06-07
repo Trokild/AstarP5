@@ -18,17 +18,17 @@ var unitimg;
 var buildingTypes = [];
 
 function preload() {
-    treImg = loadImage('./images/_forrest1x1.png');
-    unitimg = loadImage('./images/unit_test.png');
+    treImg = loadImage('./public/images/_forrest1x1.png');
+    unitimg = loadImage('./public/images/unit_test.png');
     if(debugMode){
-        heightMap = loadImage('./images/mapDebug.jpg');
+        heightMap = loadImage('./public/images/mapDebug.jpg');
     }else{
-        heightMap = loadImage('./images/heightMap.png');
-        groundMap = loadImage('./images/groundMap.png');
+        heightMap = loadImage('./public/images/heightMap.png');
+        groundMap = loadImage('./public/images/groundMap.png');
     }
-    txtrx = loadImage('./images/textureMap.png');
+    txtrx = loadImage('./public/images/textureMap.png');
 
-    building = loadImage('./images/building2x2.png');
+    building = loadImage('./public/images/building2x2.png');
     loadDataJson('buildings');
     //console.log();
     groundsUV.set("grass", [0, 1, 2, 3, 4 ,5, 6]);
@@ -46,10 +46,9 @@ function handleJson(data){
                 let imgName = bld[i].Texture;
                 let imgTemp = loadImageFile(imgName);
                 let bType = new BuildingType(bld[i].Name, imgTemp, bld[i].Size, bld[i].OpenSpace, bld[i].Ground);
-                buildingTypes.push(bType);  
+                buildingTypes.push(bType);
             }
             break;
-    
         default:
             console.log("undefined datatype");
             break;
@@ -61,7 +60,7 @@ function loadDataJson(name){
         console.log("No 'name'");
         return false;
     };
-    var dataFile = loadJSON('./json/' + name + '.json', handleJson);
+    var dataFile = loadJSON('public/json/' + name + '.json', handleJson);
     if(dataFile == null || dataFile == 'undefined'){
         console.log("No json with name: " + name);
         return false;
@@ -74,7 +73,7 @@ function loadImageFile(name){
         console.log("No 'name'");
         return false;
     };
-    var imgFile = loadImage('./images/' + name + '.png');
+    var imgFile = loadImage('public/images/' + name + '.png');
     if(imgFile == null || imgFile == 'undefined'){
         console.log("No image with name: " + name);
         return false;
@@ -94,7 +93,7 @@ function createUvCords(){
     for (let j = 0; j < 10; j++) {
         for (let i = 0; i < 10; i++) {
             uvCords[uvi] = new Array(4);
-            uvCords[uvi][0] = [x, y]; 
+            uvCords[uvi][0] = [x, y];
             uvCords[uvi][1] = [x + incr, y];
             uvCords[uvi][2] = [x, y + incr];
             uvCords[uvi][3] = [x + incr, y + incr];
@@ -111,47 +110,46 @@ function createUvCords(){
     let vdc = 0;
     vd += 1;
     let cvd = [vd, vdc];
-    
     console.log(cvd);
 
     uvCords[0] = new Array(4);
-    uvCords[0][0] = [0, 0]; 
+    uvCords[0][0] = [0, 0];
     uvCords[0][1] = [0.1, 0];
     uvCords[0][2] = [0, 0.1];
     uvCords[0][3] = [0.1, 0.1];
 
     uvCords[1] = new Array(4);
-    uvCords[1][0] = [0.1, 0]; 
+    uvCords[1][0] = [0.1, 0];
     uvCords[1][1] = [0.2, 0];
     uvCords[1][2] = [0.1, 0.1];
     uvCords[1][3] = [0.2, 0.1];
 
     uvCords[2] = new Array(4);
-    uvCords[2][0] = [0.2, 0]; 
+    uvCords[2][0] = [0.2, 0];
     uvCords[2][1] = [0.3, 0];
     uvCords[2][2] = [0.2, 0.1];
     uvCords[2][3] = [0.3, 0.1];
 
     uvCords[3] = new Array(4);
-    uvCords[3][0] = [0.3, 0]; 
+    uvCords[3][0] = [0.3, 0];
     uvCords[3][1] = [0.4, 0];
     uvCords[3][2] = [0.3, 0.1];
     uvCords[3][3] = [0.4, 0.1];
 
     uvCords[4] = new Array(4);
-    uvCords[4][0] = [0.4, 0]; 
+    uvCords[4][0] = [0.4, 0];
     uvCords[4][1] = [0.5, 0];
     uvCords[4][2] = [0.4, 0.1];
     uvCords[4][3] = [0.5, 0.1];
 
     uvCords[5] = new Array(4);
-    uvCords[5][0] = [0.5, 0]; 
+    uvCords[5][0] = [0.5, 0];
     uvCords[5][1] = [0.6, 0];
     uvCords[5][2] = [0.5, 0.1];
     uvCords[5][3] = [0.6, 0.1];
 
     uvCords[6] = new Array(4);
-    uvCords[6][0] = [0.6, 0]; 
+    uvCords[6][0] = [0.6, 0];
     uvCords[6][1] = [0.7, 0];
     uvCords[6][2] = [0.6, 0.1];
     uvCords[6][3] = [0.7, 0.1];
@@ -179,7 +177,7 @@ function createMap(){
         }
         let rgbI = [heightMap.pixels[i], heightMap.pixels[i+1], heightMap.pixels[i+2]];
         pixelMap[ib][jb] = new mapSpot(rgbI);
-        
+
         if(debugMode == false){
             let rgbJ = [groundMap.pixels[i], groundMap.pixels[i+1], groundMap.pixels[i+2]];
             pixelMap[ib][jb].addType(rgbJ);
@@ -211,20 +209,20 @@ function createMap(){
             grid[i][j] = new Spot(i, j, p, hgt, spotIdx);
             grid[i][j].spotGround = namTypeGrnd;
             spotIdx ++;
-            p--;      
+            p--;
         }
         p = rows - 1;
     };
 
     for ( var i = 0; i < cols; i++){
         for ( var j = 0; j < rows; j++){
-            grid[i][j].addNeighbors(grid);      
+            grid[i][j].addNeighbors(grid);
         }
     };
 
     for ( var i = 0; i < cols; i++){
         for ( var j = 0; j < rows; j++){
-            grid[i][j].adjustHeight();      
+            grid[i][j].adjustHeight();
         }
     };
     //console.log(pixelMap);
@@ -233,7 +231,7 @@ function createMap(){
         beginGeometry();
         for ( var i = 0; i < cols; i++){
             for ( var j = 0; j < rows; j++){
-                grid[i][j].createShape();      
+                grid[i][j].createShape();
             }
         };
         shapeMap = endGeometry();
@@ -257,12 +255,12 @@ function createMap(){
                 shapeMap.uvs[idx + 1] = uvCords[uvId][1];
                 shapeMap.uvs[idx + 2] = uvCords[uvId][2];
                 shapeMap.uvs[idx + 3] = uvCords[uvId][3];
-                
+
                 if(grd.spotGround == 'water'){
                     shapeMap.vertexStrokeColors.push(0, 1, 1, .1);
                     shapeMap.vertexStrokeColors.push(0, 1, 1, .1);
                     shapeMap.vertexStrokeColors.push(0, 1, 1, .1);
-                    shapeMap.vertexStrokeColors.push(0, 1, 1, .1); 
+                    shapeMap.vertexStrokeColors.push(0, 1, 1, .1);
                 }else if(grd.spotGround == 'sand'){
                     shapeMap.vertexStrokeColors.push(1, 1, 1, .1);
                     shapeMap.vertexStrokeColors.push(1, 1, 1, .1);
@@ -296,7 +294,7 @@ function createMap(){
                     shapeMap.vertexStrokeColors.push(0, 0, 0, .1);
                     shapeMap.vertexStrokeColors.push(0, 0, 0, .1);
                     shapeMap.vertexStrokeColors.push(0, 0, 0, .1);
-                }               
+                }
             }
         };
     }
@@ -336,7 +334,6 @@ function mapSpot(mp){
                 //console.log("Dark Green");
                 this.groundType = "tree";
                 break;
-    
             default:
                 console.log("undefined Color: " + mpT);
                 break;
